@@ -69,7 +69,8 @@ You may want to use binding if you develop POJOs that maps to
 your REST services request and response types. 
 */         
             
-            rest("/api/").description("Teste REST Service")
+            rest("/api/")
+                .description("Teste REST Service")
                 .id("api-route")
                 .post("/bean")
                 .produces(MediaType.APPLICATION_JSON)
