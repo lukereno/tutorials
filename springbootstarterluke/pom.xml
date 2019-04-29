@@ -2,38 +2,43 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.luke</groupId>
-    <artifactId>luke-spring-boot</artifactId>
+    <artifactId>core-base</artifactId>
     <version>${revision}</version>
+    <packaging>pom</packaging>
+
+    <!-- Reference: https://github.com/codecentric/spring-boot-starter-batch-web -->
 
     <modules>
-        <module>luke-spring-boot-dependencies</module>
-        <module>luke-spring-boot-build</module>
-        <module>luke-spring-boot-autoconfigure</module>
-        <module>luke-spring-boot-starter-web</module>
-        <module>luke-spring-bootstrap-sample</module>
-    </modules>
+			<module>core-dependencies</module>
+			<module>core-build</module>
+			<module>core-foundation</module>
+			<module>core-spring-boot-project</module>
+		</modules>
 
-    <packaging>pom</packaging>
 
     <developers>
         <developer>
             <name>Luke Rennison</name>
             <email>mail@lukereno.com</email>
-            <organization>ThreeMinuteMan</organization>
+            <organization>...</organization>
         </developer>
     </developers>
 
     <properties>
         <revision>1.0.0-SNAPSHOT</revision>
-        <spring-boot.version>2.0.4.RELEASE</spring-boot.version>
+        <spring-boot.version>2.1.4.RELEASE</spring-boot.version>
         <java.version>1.8</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <!-- logging -->
+        <!--<org.slf4j.version>1.7.21</org.slf4j.version>-->
 
         <!-- plugin versions -->
         <build-helper-maven-plugin.version>3.0.0</build-helper-maven-plugin.version>
@@ -137,9 +142,13 @@
                         </goals>
                         <configuration>
                             <rules>
-                                <requireMavenVersion>
-                                    <version>3.5</version>
-                                </requireMavenVersion>
+															<requireMavenVersion>
+																	<version>3.5</version>
+															</requireMavenVersion>
+															<requireJavaVersion>
+																<version>1.8</version>
+															</requireJavaVersion>
+															<banDuplicatePomDependencyVersions/>
                             </rules>
                         </configuration>
                     </execution>
@@ -314,69 +323,5 @@
             </plugins>
         </pluginManagement>
     </build>
-    <profiles>
-        <profile>
-            <id>sign-artifacts</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-gpg-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>sign-artifacts</id>
-                                <phase>verify</phase>
-                                <goals>
-                                    <goal>sign</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <profile>
-            <id>travis</id>
-            <activation>
-                <property>
-                    <name>env.TRAVIS</name>
-                    <value>true</value>
-                </property>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.jacoco</groupId>
-                        <artifactId>jacoco-maven-plugin</artifactId>
-                        <version>${jacoco-maven-plugin.version}</version>
-                        <executions>
-                            <!-- Prepares the property pointing to the JaCoCo runtime agent which
-                                is passed as VM argument when Maven the Surefire plugin is executed. -->
-                            <execution>
-                                <id>pre-unit-test</id>
-                                <goals>
-                                    <goal>prepare-agent</goal>
-                                </goals>
-                            </execution>
-                            <!-- Ensures that the code coverage report for unit tests is created
-                                after unit tests have been run. -->
-                            <execution>
-                                <id>post-unit-test</id>
-                                <phase>test</phase>
-                                <goals>
-                                    <goal>report</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.eluder.coveralls</groupId>
-                        <artifactId>coveralls-maven-plugin</artifactId>
-                        <version>${coveralls-maven-plugin.version}</version>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
 
 </project>

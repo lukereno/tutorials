@@ -1,0 +1,5 @@
+# Application Listeners
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.luke.interceptor.Slf4jMDCFilterConfiguration,\
+com.luke.interceptor.ServiceInterceptorConfiguration,\
+com.luke.interceptor.ServiceInterceptorAppConfiguration
